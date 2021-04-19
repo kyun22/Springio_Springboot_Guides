@@ -57,4 +57,8 @@ public class GsRelationalDataAccessApplication implements CommandLineRunner {
 }
 
 
-// 질문 : 실제 DB 는 어디있음? 어디다 인서트 하고 셀렉한거임?
+// Q1 : 실제 DB 는 어디있음? 어디다 인서트 하고 셀렉한거임?
+// A1 : Spring Boot supports H2 (an in-memory relational database engine) and automatically creates a connection.
+//    : 인메모리 RDB 엔진을 자동으로 생성하고 연결한다.
+// Use ? for arguments to avoid SQL injection attacks by instructing JDBC to bind variables
+
