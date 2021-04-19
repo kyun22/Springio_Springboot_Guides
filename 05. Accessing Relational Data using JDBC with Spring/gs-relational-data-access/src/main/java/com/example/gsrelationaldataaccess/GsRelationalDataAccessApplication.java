@@ -41,5 +41,20 @@ public class GsRelationalDataAccessApplication implements CommandLineRunner {
 		// Use Java 8 stream to print out each tuple of the list
 		splitNames.forEach(name -> log.info(String.format("Inserting customer record for %s %s", name[0], name[1])));
 
+		// Uses JdbcTemplate's batchUpdate operation to bulk load data
+		jdbcTemplate.batchUpdate("INSERT INTO customers(first_name, last_name) VALUES (?, ?)", splitNames);    // query 내 변수 활용
+
+		log.info("Querying for customer records where first_name = 'Josh':");
+		jdbcTemplate.query(
+				"SELECT id, first_name, last_name FROM customers WHERE first_name = ?",
+				new Object[]{"Josh"},
+				(rs, rowNum) -> new Customer(
+						rs.getLong("id"),
+						rs.getString("first_name"),
+						rs.getString("last_name"))
+		).forEach(customer -> log.info(customer.toString()));
 	}
 }
+
+
+// 질문 : 실제 DB 는 어디있음? 어디다 인서트 하고 셀렉한거임?
